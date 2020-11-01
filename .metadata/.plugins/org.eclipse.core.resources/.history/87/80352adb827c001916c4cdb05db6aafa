@@ -1,0 +1,86 @@
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+
+//תקשורת בין שרת המכונות הוירטואליות למכונות
+public class RequestHandlerVM extends Thread {
+	
+	ServerSocket serverSocket;
+	Socket sockProxy,socetVM;
+	String vmHost;
+	MachinesManager MachinesManager;
+	DistributionVMManager distributionVMManager;
+	Socket sockVM;
+	
+	public RequestHandlerVM(String vmIp,Socket sockProxy) {
+		
+		super();
+		this.vmHost = vmIp;
+		this.sockProxy=sockProxy;
+		MachinesManager=new MachinesManager();
+		distributionVMManager=new DistributionVMManager();
+
+	}
+
+	public void run() {
+		
+		// נתונים מהשרת של המכונות הוירטואליות לשרת הפרוקסי 
+		DataInputStream proxyIn;
+		
+		try {
+			proxyIn = new DataInputStream(sockProxy.getInputStream());
+			String msg=proxyIn.readUTF();
+			
+			//קבלת כתובת IP של מכונה פנויה
+			vmHost=distributionVMManager.getFreeVirtualMachine();
+			
+			//נתונים מהשרת הנוכחי למכונה הוירטואלית 
+			sockVM=new Socket(vmHost,8087);
+		//	sockVM=new Socket("127.0.0.1",8087);
+			DataOutputStream vmOut=new DataOutputStream(sockVM.getOutputStream());
+			
+			vmOut.writeUTF(msg);
+			vmOut.writeUTF("https://dl-web.dropbox.com");
+			//נתונים מהמכונה הוירטואלית לשרת הנוכחי
+			DataInputStream vmIn= new DataInputStream(sockVM.getInputStream());
+			byte[] bufVM = new byte[1];
+		
+			int check = vmIn.read(bufVM);
+			DataOutputStream proxyOut=new DataOutputStream(sockProxy.getOutputStream());
+
+			proxyOut.write(check);
+					
+			if(vmIn.available()!=-1)
+			{
+				// שולחים 2 שגיאה
+				proxyOut.writeInt(2);
+				
+			}
+			
+			if(check!= 0)
+			{
+				MachinesManager.DeleteMachine(vmHost);
+			}
+			
+		//	
+		  boolean aunser=vmIn.readBoolean();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	finally
+	{
+		try {
+			sockProxy.close();
+			sockVM.close();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	}
+}

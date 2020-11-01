@@ -1,0 +1,85 @@
+package check;
+import java.io.*; 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date; 
+
+public class ScanningFiles 
+{
+	public static void main(String[] args) throws IOException, ParseException 
+	{
+
+
+		
+		Date d= new Date();
+		int dd = Calendar.getInstance().DAY_OF_MONTH;
+		int mm = Calendar.getInstance().DAY_OF_WEEK_IN_MONTH;
+		int yy = Calendar.getInstance().DAY_OF_WEEK;
+		System.out.println(dd);
+		
+		System.out.println(d);
+		
+
+		
+		int idate=d.getDay();
+		int imonth=d.getMonth();
+		int iyear=d.getYear();
+		
+		System.out.println(idate);
+		System.out.println(imonth);
+		System.out.println(iyear);
+		
+		
+				
+		String s= iyear+"-"+imonth+"-"+idate;
+		System.out.println(s);
+		Date newDate=null, newTime=null;
+		SimpleDateFormat dt = new SimpleDateFormat ("yyyy-MM-dd");
+		//System.out.print(idate + " Parses as ");
+
+		newDate = dt.parse(s); 
+			System. out.println(newDate);
+			
+			
+		// Instantiate a Date object
+		 Date date = new Date();
+
+		 // display time and date
+		 System.out.printf("%1$s %2$tB %2$td, %2$tY", "Due date:", date);
+
+		//והתאריכים ההאש מערכי ובניית הראשונה בפעם סריקה
+		Global globals= Global.GetGlobals();
+		TwoDates myD=null;
+		int i=0;
+		boolean result=true;
+		Date[] dateArrTemp=new Date[10];//מערך בגודל כל הקבצים לתאריכים
+		Integer[] hashArrTemp=new Integer[10];//מערך בגודל כל הקבצים להאש
+
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!שהחלטנו התיקיות על לעבור
+		File file = new File("F:\\gf");
+		File[] files = file.listFiles();
+		
+		for(File f: files)//סריקת קבצי 'מלכודות הדבש'
+		{
+			myD= AccessFiles.DateAndTimeAccessFile(f);//קבלת זמן הגישה האחרון לקובץ
+			System.out.print(myD);
+			dateArrTemp[i]=myD.getTime();
+			hashArrTemp[i]=f.hashCode();
+			i++;
+			System.out.print(f.hashCode()); 
+		}
+		//אכסון הערכים בטבלאות הגלובאליות
+		globals.timesFilesBeforeSend.put(myD.getDate(),dateArrTemp);
+		globals.hashFilesBeforeSend.put(myD.getDate(),hashArrTemp );
+		
+		
+		//הבקשה ושליחת בקשות קבלת
+				
+		Temp.ScannAgain();//סריקה חוזרת אחרי שליחת הבקשה
+		
+		
+		//בדיקת השוואה
+		result=ComparisonAccessTime.Comp();
+	}
+}

@@ -1,0 +1,37 @@
+package check;
+import java.io.*; 
+import java.util.Date; 
+
+public class ScanningFiles 
+{
+	public static void main(String[] args) throws IOException 
+	{
+		//והתאריכים ההאש מערכי ובניית הראשונה בפעם סריקה
+		Global globals= Global.GetGlobals();
+		TwoDates myD=null;
+		int i=0;
+		Date[] dateArrTemp=new Date[10];//מערך בגודל כל הקבצים לתאריכים
+		Integer[] hashArrTemp=new Integer[10];//מערך בגודל כל הקבצים להאש
+
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!שהחלטנו התיקיות על לעבור
+		File file = new File("F:\\gf");
+		File[] files = file.listFiles();
+		
+		for(File f: files)//סריקת קבצי 'מלכודות הדבש'
+		{
+			myD= AccessFiles.DateAndTimeAccessFile(f);//קבלת זמן הגישה האחרון לקובץ
+			dateArrTemp[i]=myD.getTime();
+			hashArrTemp[i]=f.hashCode();
+			i++;
+			System.out.print(f.hashCode()); 
+		}
+		//אכסון הערכים בטבלאות הגלובאליות
+		globals.timesFilesBeforeSend.put(myD.getDate(),dateArrTemp);
+		globals.hashFilesBeforeSend.put(myD.getDate(),hashArrTemp );
+		
+		
+		//הבקשה ושליחת בקשות קבלת
+				
+		Temp.ScannAgain();//סריקה חוזרת אחרי שליחת הבקשה
+	}
+}

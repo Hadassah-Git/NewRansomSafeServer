@@ -1,0 +1,29 @@
+
+public class Program {
+
+	Thread serverToProxy;
+	Thread serverToVM;
+	String host;
+	int port;
+	String proxyIP="127.0.0.1";
+	int proxyPort=8085;
+	
+//	DistributionVMManager dvm=new DistributionVMManager();
+	
+	public Program() {
+		super();
+		// TODO Auto-generated constructor stub
+		//host=dvm.getFreeVM();
+		serverToProxy=new Thread(proxyIP,proxyPort);
+		serverToVM=new Thread();
+		serverToProxy.start();
+		serverToVM.start();
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="בדיקה עם תקשורת ופתיחת קובץ/check viruse/check/src"/>
+	<classpathentry kind="src" path="בדיקה עם תקשורת ופתיחת קובץ/check viruse/idontknow/src"/>
+	<classpathentry kind="src" path="שרת למכונות +וירטואליות/HttpProxy/src"/>
+	<classpathentry kind="src" path="שרת למכונות +וירטואליות/ProxyServer/src"/>
+	<classpathentry kind="src" path="שרת למכונות +וירטואליות/VMServer2/src"/>
+	<classpathentry kind="src" path="ProxyServer/proxy/HTTPproxy/src"/>
+	<classpathentry kind="src" path="ProxyServer/proxy/Java-Proxy-Server-master/src"/>
+	<classpathentry kind="src" path="ProxyServer/proxy/Try/src"/>
+	<classpathentry kind="src" path="virtualMacMan/src"/>
+	<classpathentry kind="output" path="ProxyServer/proxy/HTTPproxy/bin"/>
+</classpath>

@@ -1,0 +1,57 @@
+package check;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List; 
+import java.util.Map;
+import java.io.*; 
+import java.util.ArrayList; 
+import java.util.Date;
+
+import javax.print.attribute.standard.Compression;
+
+public class ComparisonAccessTime
+{ 
+	public static int Comp() 
+	{
+		Global globals= Global.GetGlobals();
+		LocalDate localDate = LocalDate.now();
+		System.out.println(localDate);
+		Date today = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		List<Date> todayFilesAftrS = globals.timesFilesAfterSend.get(today);////////////
+		List<Date> todayFilesBfrS = globals.timesFilesBeforeSend.get(today);////////////
+		int count=0;//מונה את מספר תאריכי הגישה שאינם שווים 
+		
+	
+		if (globals.numAllBeforeSend!=globals.numAllAfterSend) //יש שינוי במספר הקבצים- מחזיר שגיאה
+		{
+			return 1;
+		}
+		
+		
+		if (todayFilesAftrS==null)//לא ניגשו היום לקבצים 
+		{
+			return 0;
+		}
+		
+		for (int i=todayFilesAftrS.size()-1; i>-1 ; i--)//כל עוד יש ערכים בשתי הרשימות 
+		{
+			if(todayFilesBfrS==null)
+			{
+				return ComparisonHash.Comp();
+			}
+			if (todayFilesBfrS.get(i).equals(todayFilesAftrS.get(i))==false)//תאריכי הגישה אינם שווים
+			{
+			/*	count++;
+				if (count>2) // ניגשו ליותר מ-5 קבצים
+				{
+					return ComparisonHash.Comp();//פונקציה לבדיקת שוויון ערכי ההאש
+				}*/
+				return ComparisonHash.Comp();//פונקציה לבדיקת שוויון ערכי ההאש
+			}
+		}
+		return 0;//לא ניגשו לקבצים אלו - הכתובת בטוחה
+	}
+}
+
+

@@ -1,0 +1,32 @@
+package idontknow;
+import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.List; 
+import java.util.Map;
+import java.util.Set;
+import java.io.*; 
+import java.util.ArrayList; 
+import java.util.Date;
+
+public class ComparisonHash
+{ 
+	public static void Comp() 
+	{
+		//Global globals= Global.GetGlobals();
+		//Date today = new Date();
+		Map<Integer, Integer> hashFiles=new HashMap<Integer, Integer>();
+		//Enumeration<Integer> todayFiles = hashFiles.elements();
+		hashFiles.put(1, 2);
+		hashFiles.put(1, 6);
+		hashFiles.put(1, 5);
+		hashFiles.put(1, 4);
+	//	Enumeration<Integer> todayFiles = globals.hashFilesBeforeSend.elements();
+		for (Integer r : hashFiles.values()) {
+			
+			System.out.println(r);
+			
+		}
+	}
+}

@@ -1,0 +1,31 @@
+package check;
+import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.List; 
+import java.util.Map;
+import java.io.*; 
+import java.util.ArrayList; 
+import java.util.Date;
+
+public class ComparisonHash
+{ 
+	public static void Comp() 
+	{
+		Global globals= Global.GetGlobals();
+		Date today = new Date();
+		Dictionary<Integer, Integer> hashFiles=new Hashtable<Integer, Integer>();
+		Enumeration<Integer> todayFiles = hashFiles.elements();
+		hashFiles.put(1, 2);
+		hashFiles.put(1, 6);
+		hashFiles.put(2, 5);
+		hashFiles.put(3, 4);
+	//	Enumeration<Integer> todayFiles = globals.hashFilesBeforeSend.elements();
+		for (Enumeration i=todayFiles;i.hasMoreElements();)
+		{
+			
+			System.out.print(i.nextElement());
+			
+		}
+	}
+}

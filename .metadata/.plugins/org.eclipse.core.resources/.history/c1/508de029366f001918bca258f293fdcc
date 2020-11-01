@@ -1,0 +1,28 @@
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+
+//תקשורת בין שרת המכונות הוירטואליות למכונות
+public class RequestHandlerVM extends Thread {
+	
+	String vmHost;
+	DistributionVMManager dvm=new DistributionVMManager();
+
+	public RequestHandlerVM(String vmHost) {
+		
+		super();
+		this.vmHost = vmHost;
+	}
+	
+	public void run() {
+		DataInputStream proxyIn=new DataInputStream(sockProxy.getInputStream());
+		vmHost=dvm.getFreeVM();
+		Socket sockVM=new Socket(vmHost,8087);
+		DataOutputStream VMOut=new DataOutputStream(sockProxy.getOutputStream());
+		String msg=proxyIn.readUTF();
+		VMOut.writeUTF(msg);
+		bool
+		
+}

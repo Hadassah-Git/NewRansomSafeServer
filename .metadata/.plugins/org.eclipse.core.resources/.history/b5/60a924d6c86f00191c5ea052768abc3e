@@ -1,0 +1,93 @@
+import org.virtualbox_6_0.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.virtualbox_6_0.IMachine;
+import org.virtualbox_6_0.IVirtualBox;
+import org.virtualbox_6_0.VirtualBoxManager;
+
+public class MachinesManager {
+	
+public static void main(String[] args) {
+		
+		MachinesManager manager= new MachinesManager();
+		manager.cloneMachine();
+	}
+	
+	static Map<IMachine, Boolean> mapVM = new HashMap<>();	
+	static IVirtualBox vbox;
+	static List<IMachine> machines;
+	static Object lock = new Object();
+	
+	//אמור להתבצע אחת
+	public static void MachinesManager() {
+	
+	VirtualBoxManager virtualBoxManager = VirtualBoxManager.createInstance(null);
+	//יצירת המנהל למכונות
+	 vbox= virtualBoxManager.getVBox();
+	//רשימת המכונות הקיימות
+	machines= vbox.getMachines();
+	
+	for (IMachine myachine : machines) {
+		mapVM.put(myachine, true);
+	}
+	
+}
+	
+	
+		public static IMachine getFreeVirtualMachine() //מחזירה שם של מכונה פנויה
+		{
+			for (Map.Entry<IMachine, Boolean> thisVM : mapVM.entrySet())
+			{
+				//חסימה
+				synchronized(lock){
+					if(thisVM.getValue())
+					{
+						//קריאה לפונקציה שמעדכנת את הסטטוס של המכונה לתפוס	
+						SetVMState(thisVM.getKey(), false);
+						return thisVM.getKey();
+					}
+				}
+			}
+			return null;
+		}
+		
+		//מעדכנת את הסטטוס של המכונה פנויה או לא 
+		public static void SetVMState(IMachine name, boolean state)//מכניס את המכונות ומעדכן את הסטוס כל פעם
+		{
+			mapVM.put(name, state);
+		}
+	
+	//יצירת מכונה מועתקת
+	public static void cloneMachine() {
+		
+	//קבלת המכונה המקורית
+	IMachine original= machines.get(0);
+	
+	//הגדרות למכונה החדשה
+	CloneMode myState=CloneMode.AllStates;
+	List<CloneOptions> Options=new ArrayList<>();
+	//יצירת המכונה החדשה
+	IMachine myClone= vbox.createMachine(null, "myVM", null, original.getOSTypeId(), "forceOverwrite=1");
+	
+	//העתק של המכונה המקורית לחדשה
+	original.cloneTo(myClone, myState, Options);
+	//שמירת הנתונים	 
+	myClone.saveSettings();
+	//הוספה למנהל המכונות
+	vbox.registerMachine(myClone);
+	mapVM.put(myClone, true);
+	
+	
+	
+	//vbox.findMachine("");
+	}
+	
+	
+	
+	//מחיקת מכונה שנהרסה
+
+}

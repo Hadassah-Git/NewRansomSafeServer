@@ -1,0 +1,4 @@
+
+public class ServerToVM extends Thread {
+	Sting vmHost;
+}

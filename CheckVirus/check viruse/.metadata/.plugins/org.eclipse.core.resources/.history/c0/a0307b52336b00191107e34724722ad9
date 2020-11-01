@@ -1,0 +1,32 @@
+package check;
+import java.io.File; 
+import java.io.IOException;
+import java.util.Date;
+
+public class Temp
+{
+	public static void ScannAgain() throws IOException 
+	{
+		Global globals= Global.GetGlobals();
+		TwoDates myD=null;
+		int i=0;
+		Date[] dateArrTemp=new Date[10];//מערך בגודל כל הקבצים לתאריכים
+		Integer[] hashArrTemp=new Integer[10];//מערך בגודל כל הקבצים להאש
+		
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!שהחלטנו התיקיות על לעבור
+		File file = new File("F:\\gf");
+		File[] files = file.listFiles(); 
+		
+		for(File f: files)//סריקת קבצי 'מלכודות הדבש'
+		{
+			myD= AccessFiles.DateAndTimeAccessFile(f);//קבלת זמן הגישה האחרון לקובץ
+			dateArrTemp[i]=myD.getTime();
+			hashArrTemp[i]=f.hashCode();
+			i++;
+		}
+		//אכסון הערכים בטבלאות הגלובאליות
+		globals.timesFilesAfterSend.put(myD.getDate(),dateArrTemp);
+		globals.hashFilesAfterSend.put(myD.getDate(),hashArrTemp );
+		
+	}
+}

@@ -1,0 +1,54 @@
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+
+//תקשורת בין שרת המכונות הוירטואליות למכונות
+public class RequestHandlerVM extends Thread {
+	
+	ServerSocket serverSocket;
+	Socket sockProxy,socetVM;
+	String vmHost;
+	MachinesManager mMVM;
+	
+	public RequestHandlerVM(String vmIp,Socket sockProxy) {
+		
+		super();
+		this.vmHost = vmIp;
+		this.sockProxy=sockProxy;
+		mMVM=new MachinesManager();
+
+	}
+
+	public void run() {
+		
+		// נתונים מהשרת של המכונות הוירטואליות לשרת הפרוקסי 
+		DataInputStream proxyIn;
+		try {
+			proxyIn = new DataInputStream(sockProxy.getInputStream());
+			String msg=proxyIn.readUTF();
+			
+			//קבלת כתובת IP של מכונה פנויה
+			vmHost=mMVM.getFreeVirtualMachine();
+			
+			//נתונים מהשרת הנוכחי למכונה הוירטואלית 
+			Socket sockVM=new Socket(vmHost,8087);
+			DataOutputStream vmOut=new DataOutputStream(sockProxy.getOutputStream());
+			
+			vmOut.writeUTF(msg);
+			
+			//נתונים מהמכונה הוירטואלית לשרת הנוכחי
+			DataInputStream vmIn= new DataInputStream(sockVM.getInputStream());
+			boolean aunser=vmIn.readBoolean();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	finally
+	{
+		
+	}
+	}
+}

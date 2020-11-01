@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="DistributionVMManager"/>
+<fullyQualifiedTypeName name="javax.xml.bind.Marshaller.Listener"/>
+<fullyQualifiedTypeName name="java.lang.Runnable"/>
+<fullyQualifiedTypeName name="java.net.ServerSocket"/>
+<fullyQualifiedTypeName name="java.net.Socket"/>
+<fullyQualifiedTypeName name="java.io.BufferedReader"/>
+<fullyQualifiedTypeName name="java.io.DataInput"/>
+<fullyQualifiedTypeName name="java.lang.Thread"/>
+<fullyQualifiedTypeName name="RequestHandlerVM"/>
+<fullyQualifiedTypeName name="java.io.DataInputStream"/>
+<fullyQualifiedTypeName name="java.io.DataOutputStream"/>
+<fullyQualifiedTypeName name="MachinesManager"/>
+<fullyQualifiedTypeName name="java.lang.Boolean"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+</qualifiedTypeNameHistroy>

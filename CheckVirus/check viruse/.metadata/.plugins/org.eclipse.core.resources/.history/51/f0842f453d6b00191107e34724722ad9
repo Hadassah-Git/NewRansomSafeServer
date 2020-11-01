@@ -1,0 +1,13 @@
+package check;
+
+import java.util.Date;
+
+public class SplitDate {
+	
+	public void gf()
+	{
+		Date d= new Date();
+		System.out.print(d);
+	}
+
+}

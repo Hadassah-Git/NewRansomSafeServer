@@ -1,0 +1,13 @@
+
+//תקשורת בין שרת המכונות הוירטואליות למכונות
+public class ServerToVM extends Thread {
+	
+	String vmHost;
+
+	public ServerToVM(String vmHost) {
+		super();
+		this.vmHost = vmHost;
+	}
+	
+	
+}

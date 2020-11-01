@@ -1,0 +1,4 @@
+INDEX VERSION 1.127+C:\Users\206936304\Desktop\שרת למכונות +וירטואליות\.metadata\.plugins\org.eclipse.jdt.core
+4025647971.index
+1785125019.index
+687421783.index
